@@ -64,6 +64,7 @@
                 <button type="submit">Registrar</button>
             </form>
             <p id="mensaje-inscripcion"></p>
+            <p id="emoji-verificacion" style="font-size: 2em;"></p>
         </section>
     </main>
 
@@ -71,7 +72,7 @@
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script type="text/javascript">
         (function(){
-            emailjs.init("9Ib_Cz6ZOF1n5g8oJ");  // Reemplaza "YOUR_PUBLIC_KEY" con tu Public Key de EmailJS
+            emailjs.init("YOUR_PUBLIC_KEY");  // Reemplaza "YOUR_PUBLIC_KEY" con tu Public Key de EmailJS
         })();
     </script>
 
@@ -80,11 +81,12 @@
         document.addEventListener("DOMContentLoaded", () => {
             const formRegistro = document.getElementById('form-registro');
             const mensajeInscripcion = document.getElementById('mensaje-inscripcion');
+            const emojiVerificacion = document.getElementById('emoji-verificacion');
 
             if (formRegistro) {
                 // Función para enviar un correo electrónico usando EmailJS
                 const enviarCorreo = (nombrePadre, nombreMadre, nombreEstudiante, ubicacion, telefono, edad, grado) => {
-                    emailjs.send("service_as2f68m", "template_bl5ganb", {
+                    emailjs.send("service_6lrng9k", "template_bl5ganb", {
                         nombre_padre: nombrePadre,
                         nombre_madre: nombreMadre,
                         nombre_estudiante: nombreEstudiante,
@@ -99,6 +101,9 @@
                         console.log('SUCCESS!', response.status, response.text);
                         mensajeInscripcion.textContent = "Estudiante Inscrito";
                         mensajeInscripcion.style.color = "green";
+                        setTimeout(() => {
+                            emojiVerificacion.textContent = "✅";
+                        }, 5000); // Mostrar emoji después de 5 segundos
                     }, (error) => {
                         console.error('FAILED...', error);
                         mensajeInscripcion.textContent = "Estudiante no Inscrito";

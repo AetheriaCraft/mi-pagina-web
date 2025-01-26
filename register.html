@@ -9,7 +9,8 @@
 <body>
     <header>
         <h1>📚 Sala de Tareas</h1>
-        <img src="niño_mi_luz.png" alt="Logo Niño Mi Luz" style="width: 200px; height: auto;">
+        <!-- Agregar el logo -->
+        <img src="niño_mi_luz.png" alt="Logo Niño Mi Luz" style="width: 60px; height: auto;">
         <nav>
             <a href="index.html">Inicio</a>
             <a href="register.html">Registro</a>
@@ -34,14 +35,6 @@
                     <label for="nombre-estudiante">Nombre del Estudiante:</label>
                     <input type="text" id="nombre-estudiante" name="nombre-estudiante" required>
                 </div>
-
-                <div class="form-group">
-                    <label for="genero">Género del Estudiante:</label>
-                    <select id="genero" name="genero" required>
-                        <option value="hembra">Hembra</option>
-                        <option value="varon">Varón</option>
-                    </select>
-                </div>
                 
                 <div class="form-group">
                     <label for="ubicacion">Ubicación de Casa:</label>
@@ -62,38 +55,36 @@
                     <label for="grado">Grado del Niño:</label>
                     <input type="text" id="grado" name="grado" required>
                 </div>
-
+                
                 <div class="form-group">
-                      <label for="comentario">Comentario:</label>
-                      <input type="text" id="comentary" name="comentario"> 
+                    <label for="hora-registro">Hora de Registro:</label>
+                    <input type="time" id="hora-registro" name="hora-registro" required>
                 </div>
                 
                 <button type="submit">Registrar</button>
             </form>
+            <p id="mensaje-inscripcion"></p>
         </section>
     </main>
 
     <!-- Incluir EmailJS -->
-    <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-(function(){
-  emailjs.init({
-    publicKey: "9Ib_Cz6ZOF1n5g8oJ",
-  });
-})();
-</script>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("YOUR_PUBLIC_KEY");  // Reemplaza "YOUR_PUBLIC_KEY" con tu Public Key de EmailJS
+        })();
+    </script>
 
     <!-- Script de registro -->
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
             const formRegistro = document.getElementById('form-registro');
+            const mensajeInscripcion = document.getElementById('mensaje-inscripcion');
 
             if (formRegistro) {
                 // Función para enviar un correo electrónico usando EmailJS
-                const enviarCorreo = (nombrePadre, nombreMadre, nombreEstudiante, ubicacion, telefono, edad, grado, genero, comentario) => {
-                    emailjs.send("service_as2f68m", "template_bl5ganb", {
+                const enviarCorreo = (nombrePadre, nombreMadre, nombreEstudiante, ubicacion, telefono, edad, grado) => {
+                    emailjs.send("service_6lrng9k", "template_bl5ganb", {
                         nombre_padre: nombrePadre,
                         nombre_madre: nombreMadre,
                         nombre_estudiante: nombreEstudiante,
@@ -101,16 +92,29 @@
                         telefono: telefono,
                         edad: edad,
                         grado: grado,
-                        genero: genero,
-                        comentario: comentario,
                         from_name: "Dariel",
                         to_email: "tejadadarieltejada@gmail.com",
                         reply_to: telefono
                     }).then((response) => {
                         console.log('SUCCESS!', response.status, response.text);
+                        mensajeInscripcion.textContent = "Estudiante Inscrito";
+                        mensajeInscripcion.style.color = "green";
                     }, (error) => {
                         console.error('FAILED...', error);
+                        mensajeInscripcion.textContent = "Estudiante no Inscrito";
+                        mensajeInscripcion.style.color = "red";
                     });
+                };
+
+                // Función para validar la hora de registro
+                const validarHoraRegistro = (horaRegistro) => {
+                    const [hours, minutes] = horaRegistro.split(':').map(Number);
+                    const currentTime = new Date();
+                    const registroTime = new Date();
+                    registroTime.setHours(hours, minutes, 0, 0);
+
+                    // Verifica si la hora de registro es antes de la hora actual
+                    return registroTime <= currentTime;
                 };
 
                 // Función para agregar un estudiante a la lista y enviar correo
@@ -119,15 +123,19 @@
                     const nombrePadre = document.getElementById('nombre-padre').value;
                     const nombreMadre = document.getElementById('nombre-madre').value;
                     const nombreEstudiante = document.getElementById('nombre-estudiante').value;
-                    const genero = document.getElementById('genero').value;
                     const ubicacion = document.getElementById('ubicacion').value;
                     const telefono = document.getElementById('telefono').value;
                     const edad = document.getElementById('edad').value;
                     const grado = document.getElementById('grado').value;
-                    const comentario = document.getElementById('comentary').value;
+                    const horaRegistro = document.getElementById('hora-registro').value;
 
-                    // Enviar correo
-                    enviarCorreo(nombrePadre, nombreMadre, nombreEstudiante, ubicacion, telefono, edad, grado, genero, comentario);
+                    if (validarHoraRegistro(horaRegistro)) {
+                        // Enviar correo
+                        enviarCorreo(nombrePadre, nombreMadre, nombreEstudiante, ubicacion, telefono, edad, grado);
+                    } else {
+                        mensajeInscripcion.textContent = "Hora de registro no válida";
+                        mensajeInscripcion.style.color = "red";
+                    }
 
                     formRegistro.reset();
                 });

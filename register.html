@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Estudiantes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>📚 Sala de Tareas</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="register.html">Registro</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="registro-estudiantes">
+            <h2>✍️ Registro de Estudiantes</h2>
+            <form id="form-registro">
+                <div class="form-group">
+                    <label for="nombre-padre">Nombre del Padre y Apellido:</label>
+                    <input type="text" id="nombre-padre" name="nombre-padre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nombre-madre">Nombre de la Madre y Apellido:</label>
+                    <input type="text" id="nombre-madre" name="nombre-madre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nombre-estudiante">Nombre del Estudiante:</label>
+                    <input type="text" id="nombre-estudiante" name="nombre-estudiante" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="genero">Género del Estudiante:</label>
+                    <select id="genero" name="genero" required>
+                        <option value="hembra">Hembra</option>
+                        <option value="varon">Varón</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ubicacion">Ubicación de Casa:</label>
+                    <input type="text" id="ubicacion" name="ubicacion" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefono">Número de Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edad">Edad del Niño:</label>
+                    <input type="number" id="edad" name="edad" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="grado">Grado del Niño:</label>
+                    <input type="text" id="grado" name="grado" required>
+                </div>
+
+                <div class="form-group">
+                      <label for="comentario">Comentario:</label>
+                      <input type="text" id="comentary" name="comentario"> 
+                </div>
+                
+                <button type="submit">Registrar</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Incluir EmailJS -->
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+(function(){
+  emailjs.init({
+    publicKey: "9Ib_Cz6ZOF1n5g8oJ",
+  });
+})();
+</script>
+
+    <!-- Script de registro -->
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            const formRegistro = document.getElementById('form-registro');
+
+            if (formRegistro) {
+                // Función para enviar un correo electrónico usando EmailJS
+                const enviarCorreo = (nombrePadre, nombreMadre, nombreEstudiante, ubicacion, telefono, edad, grado, genero, comentario) => {
+                    emailjs.send("service_as2f68m", "template_bl5ganb", {
+                        nombre_padre: nombrePadre,
+                        nombre_madre: nombreMadre,
+                        nombre_estudiante: nombreEstudiante,
+                        ubicacion: ubicacion,
+                        telefono: telefono,
+                        edad: edad,
+                        grado: grado,
+                        genero: genero,
+                        comentario: comentario,
+                        from_name: "Dariel",
+                        to_email: "tejadadarieltejada@gmail.com",
+                        reply_to: telefono
+                    }).then((response) => {
+                        console.log('SUCCESS!', response.status, response.text);
+                    }, (error) => {
+                        console.error('FAILED...', error);
+                    });
+                };
+
+                // Función para agregar un estudiante a la lista y enviar correo
+                formRegistro.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const nombrePadre = document.getElementById('nombre-padre').value;
+                    const nombreMadre = document.getElementById('nombre-madre').value;
+                    const nombreEstudiante = document.getElementById('nombre-estudiante').value;
+                    const genero = document.getElementById('genero').value;
+                    const ubicacion = document.getElementById('ubicacion').value;
+                    const telefono = document.getElementById('telefono').value;
+                    const edad = document.getElementById('edad').value;
+                    const grado = document.getElementById('grado').value;
+                    const comentario = document.getElementById('comentary').value;
+
+                    // Enviar correo
+                    enviarCorreo(nombrePadre, nombreMadre, nombreEstudiante, ubicacion, telefono, edad, grado, genero, comentario);
+
+                    formRegistro.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

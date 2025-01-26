@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sala de Tareas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>📚 Sala de Tareas</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="register.html">Registro</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="horario">
+            <h2>🕒 Horario</h2>
+            <table id="tabla-horario">
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Hora de Inicio</th>
+                        <th>Hora de Fin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se agregarán las clases -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="estado-clase">
+            <h2>📅 ¿Hoy hay clases?</h2>
+            <p id="estado"></p>
+        </section>
+
+        <section id="conteo-estudiantes">
+            <h2>👨‍🎓 Cantidad de Estudiantes Estudiando Actualmente</h2>
+            <p>Hembras: <span id="cantidad-hembras">7</span></p>
+            <p>Varones: <span id="cantidad-varones">4</span></p>
+        </section>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

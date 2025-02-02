@@ -10,14 +10,23 @@ body {
 header {
     background-color: #4CAF50;
     color: white;
-    padding: 15px 0;
+    padding: 15px 20px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 header h1 {
     margin: 0;
     font-size: 2.5em;
+}
+
+header img {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    width: 60px; /* Ajusta el tamaño según tu preferencia */
+    height: auto;
 }
 
 nav a {
@@ -121,6 +130,7 @@ th {
     color: #4CAF50;
     font-weight: bold;
 }
+
 #conteo-estudiantes {
     margin-top: 20px;
 }
@@ -128,4 +138,14 @@ th {
 #conteo-estudiantes p {
     font-size: 1.5em;
     color: #333;
+}
+
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
 }
